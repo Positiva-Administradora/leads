@@ -5,6 +5,8 @@ import { EnvironmentProps } from "@/types/environment";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
+import { brokers, channels, indicators } from "../manager/index.page";
+
 export default function Homepage({ env, ...query }: { env: EnvironmentProps["env"] }) {
 	const { background } = getWhiteLabel(env);
 
@@ -12,6 +14,15 @@ export default function Homepage({ env, ...query }: { env: EnvironmentProps["env
 	const backgroundPath = `/backgrounds/${background?.slug}.${background?.format}`;
 
 	console.log(query);
+
+	const channelId = query?.channelId;
+	const channelPath = channelId ? channels.find(c => c.id === channelId)?.slug : null;
+
+	const brokerId = query?.brokerId;
+	const brokerPath = brokerId ? brokers.find(c => c.id === brokerId)?.slug : null;
+
+	const indicatorId = query?.indicatorId;
+	const indicatorPath = indicatorId ? indicators.find(c => c.id === indicatorId)?.id : null;
 
 	return (
 		<Box
@@ -53,22 +64,34 @@ export default function Homepage({ env, ...query }: { env: EnvironmentProps["env
 							sx={{
 								width: 200,
 								height: "100%",
-								border: "1px solid",
-								borderColor: "primary.main",
+								// border: "1px solid",
+								// borderColor: "primary.main",
+								position: "relative",
 							}}
 						>
-							Canal
+							{channelPath && (
+								<Image
+									src={`/channels/${channelPath}.png`}
+									alt="Logo"
+									fill
+									objectFit="contain"
+									quality={100}
+								/>
+							)}
 						</Box>
 
 						<Box
 							sx={{
 								width: 200,
 								height: "100%",
-								border: "1px solid",
-								borderColor: "primary.main",
+								// border: "1px solid",
+								// borderColor: "primary.main",
+								position: "relative",
 							}}
 						>
-							Corretora Master
+							{brokerPath && (
+								<Image src={`/brokers/${brokerPath}.png`} alt="Logo" fill objectFit="contain" />
+							)}
 						</Box>
 					</Box>
 
@@ -155,7 +178,23 @@ export default function Homepage({ env, ...query }: { env: EnvironmentProps["env
 									p: 2,
 								}}
 							>
-								Dados de Indicador
+								<Box
+									sx={{
+										width: 40,
+										aspectRatio: "1/1",
+										// border: "1px solid",
+										// borderColor: "primary.main",
+										position: "relative",
+									}}
+								>
+									<Image
+										src={`/indicators/${indicatorPath}.png`}
+										alt="Logo"
+										fill
+										objectFit="contain"
+										quality={100}
+									/>
+								</Box>
 							</Box>
 						</Box>
 					</Box>
