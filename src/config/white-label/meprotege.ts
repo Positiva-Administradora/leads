@@ -288,6 +288,7 @@ const meProtegeConfig = {
 	title: "Me Protege",
 	favicon: "meprotege",
 	ansNumber: "41.804-8",
+	description: "Me Protege Franquia e Corretora de Seguros LTDA",
 	register: "25.006.061/0001-97",
 	terms: "https://meprotege.com.br/",
 	logo: {

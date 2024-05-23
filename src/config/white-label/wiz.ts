@@ -301,6 +301,7 @@ const wizConfig = {
 	title: "Wiz Mais Você",
 	favicon: "wiz",
 	ansNumber: "41.804-8",
+	description: "Wiz Benefícios Varejo Soluções e Corretagem de Seguros S.A",
 	register: "46.597.249/0001-27",
 	terms: "https://wizmaisvoce.com.br/politica-de-privacidade",
 	logo: {

@@ -22,7 +22,7 @@ export const ThemeProvider = ({
 	}, [pageProps, setEnvironment]);
 
 	const { theme, title, favicon } = useMemo(() => {
-		const whiteLabel = getWhiteLabel(env);
+		const whiteLabel = getWhiteLabel(env || "wiz");
 
 		const theme = whiteLabel?.theme;
 		const title = whiteLabel?.title;

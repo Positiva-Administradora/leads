@@ -5,11 +5,13 @@ import { EnvironmentProps } from "@/types/environment";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
-export default function Homepage({ env }: { env: EnvironmentProps["env"] }) {
+export default function Homepage({ env, ...query }: { env: EnvironmentProps["env"] }) {
 	const { background } = getWhiteLabel(env);
 
 	const backgroundAlt = background?.alt;
 	const backgroundPath = `/backgrounds/${background?.slug}.${background?.format}`;
+
+	console.log(query);
 
 	return (
 		<Box

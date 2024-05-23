@@ -287,6 +287,7 @@ const positivaConfig = {
 	theme: positivaTheme,
 	title: "Positiva",
 	favicon: "positiva",
+	description: "Positiva Administradora de Benefícios LTDA",
 	ansNumber: "42.028-0",
 	register: "28.929.873/0001-00",
 	terms: "https://positiva.com.br/politica-de-privacidade",

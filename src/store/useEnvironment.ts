@@ -6,9 +6,9 @@ export interface Environment {
 }
 
 export const useEnvironment = create<{
-	environment: Environment;
+	environment?: Environment;
 	setEnvironment: (environment: Environment) => void;
 }>(set => ({
-	environment: {},
+	environment: undefined,
 	setEnvironment: (environment: Environment) => set({ environment }),
 }));
