@@ -7,13 +7,20 @@ import Image from "next/image";
 
 import { brokers, channels, indicators } from "../manager/index.page";
 
-export default function Homepage({ env, ...query }: { env: EnvironmentProps["env"] }) {
+export default function Homepage({
+	env,
+	...query
+}: {
+	env: EnvironmentProps["env"];
+	userFullName: string;
+	brokerId: number;
+	channelId: number | null;
+	indicatorId: number | null;
+}) {
 	const { background } = getWhiteLabel(env);
 
 	const backgroundAlt = background?.alt;
 	const backgroundPath = `/backgrounds/${background?.slug}.${background?.format}`;
-
-	console.log(query);
 
 	const channelId = query?.channelId;
 	const channelPath = channelId ? channels.find(c => c.id === channelId)?.slug : null;
@@ -74,8 +81,10 @@ export default function Homepage({ env, ...query }: { env: EnvironmentProps["env
 									src={`/channels/${channelPath}.png`}
 									alt="Logo"
 									fill
-									objectFit="contain"
 									quality={100}
+									style={{
+										objectFit: "contain",
+									}}
 								/>
 							)}
 						</Box>
@@ -117,8 +126,10 @@ export default function Homepage({ env, ...query }: { env: EnvironmentProps["env
 								<Image
 									src={backgroundPath}
 									alt={backgroundAlt}
-									layout="fill"
-									objectFit="contain"
+									fill
+									style={{
+										objectFit: "contain",
+									}}
 									objectPosition="left bottom"
 									quality={100}
 									draggable={false}
@@ -191,7 +202,9 @@ export default function Homepage({ env, ...query }: { env: EnvironmentProps["env
 										src={`/indicators/${indicatorPath}.png`}
 										alt="Logo"
 										fill
-										objectFit="contain"
+										style={{
+											objectFit: "contain",
+										}}
 										quality={100}
 									/>
 								</Box>
@@ -212,9 +225,7 @@ export default function Homepage({ env, ...query }: { env: EnvironmentProps["env
 							flex: 1,
 							mb: 4.6,
 						}}
-					>
-						Chat
-					</Box>
+					></Box>
 
 					<Box
 						sx={{

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 import { Wrapper } from "@/components/wrapper";
 import { encrypt } from "@/utils/crypto";
@@ -16,6 +17,7 @@ import {
 	Grid,
 	TextField,
 	Typography,
+	IconButton,
 } from "@mui/material";
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
@@ -120,6 +122,12 @@ export default function Manager() {
 		const link = `${origin}${query}`;
 
 		setEncryptedLink(link);
+
+		reset(data, {
+			keepValues: true,
+		});
+
+		toast.success("Link gerado com sucesso!");
 	}
 
 	return (
@@ -130,7 +138,7 @@ export default function Manager() {
 				backgroundColor: "#F6EFE6",
 			}}
 		>
-			<Wrapper sx={{ display: "grid", placeItems: "center", height: "100%" }}>
+			<Wrapper sx={{ display: "grid", placeItems: "center", height: "100%", py: 4 }}>
 				<Container
 					maxWidth="md"
 					sx={{
@@ -210,7 +218,9 @@ export default function Manager() {
 															<Image
 																src={`/brokers/${option.slug}.png`}
 																fill
-																objectFit="contain"
+																style={{
+																	objectFit: "contain",
+																}}
 																alt={option.name}
 															/>
 														</Box>
@@ -276,7 +286,9 @@ export default function Manager() {
 															<Image
 																src={`/channels/${option.slug}.png`}
 																fill
-																objectFit="contain"
+																style={{
+																	objectFit: "contain",
+																}}
 																alt={option.name}
 															/>
 														</Box>
@@ -337,7 +349,9 @@ export default function Manager() {
 														<Image
 															src={`/indicators/${option.id}.png`}
 															fill
-															objectFit="contain"
+															style={{
+																objectFit: "contain",
+															}}
 															alt={option.name}
 														/>
 													</Box>
@@ -423,38 +437,30 @@ export default function Manager() {
 					<Box
 						sx={{
 							mt: 4,
-							p: 2,
+							p: 1,
 							backgroundColor: "#FFF",
 							border: "1px solid",
 							borderColor: "primary.main",
-							whiteSpace: "break-spaces",
 							display: "grid",
 							gridTemplateColumns: "40px 1fr 40px",
 							gap: 1,
 						}}
 					>
-						<Box
-							sx={{
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-								cursor: "pointer",
-							}}
-							onClick={() => {
-								// navigator.clipboard.writeText(encryptedLink);
-							}}
-						>
+						<IconButton onClick={() => encryptedLink && window.open(encryptedLink, "_blank")}>
 							<ContentCopyIcon
 								sx={{
-									mr: 1,
+									fontSize: 16,
 								}}
 							/>
-						</Box>
+						</IconButton>
 
 						<Box
 							sx={{
-								wordWrap: "break-word",
+								whiteSpace: "nowrap",
 								overflow: "hidden",
+								textOverflow: "ellipsis",
+								display: "flex",
+								alignItems: "center",
 							}}
 						>
 							<Typography
@@ -468,23 +474,9 @@ export default function Manager() {
 							</Typography>
 						</Box>
 
-						<Box
-							sx={{
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-								cursor: "pointer",
-							}}
-							onClick={() => {
-								window.open(encryptedLink, "_blank");
-							}}
-						>
-							<LinkIcon
-								sx={{
-									mr: 1,
-								}}
-							/>
-						</Box>
+						<IconButton onClick={() => encryptedLink && window.open(encryptedLink, "_blank")}>
+							<LinkIcon />
+						</IconButton>
 					</Box>
 				</Container>
 			</Wrapper>
