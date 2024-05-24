@@ -22,11 +22,13 @@ export default function Homepage({
 	const backgroundAlt = background?.alt;
 	const backgroundPath = `/backgrounds/${background?.slug}.${background?.format}`;
 
+	const imageByEnv = env === "wiz" ? "wizmaisvoce" : env;
+
 	const channelId = query?.channelId;
-	const channelPath = channelId ? channels.find(c => c.id === channelId)?.slug : null;
+	const channelPath = channelId ? channels.find(c => c.id === channelId)?.slug : imageByEnv;
 
 	const brokerId = query?.brokerId;
-	const brokerPath = brokerId ? brokers.find(c => c.id === brokerId)?.slug : null;
+	const brokerPath = brokerId ? brokers.find(c => c.id === brokerId)?.slug : "wizmaisvoce";
 
 	const indicatorId = query?.indicatorId;
 	const indicatorPath = indicatorId ? indicators.find(c => c.id === indicatorId)?.id : null;
@@ -99,7 +101,14 @@ export default function Homepage({
 							}}
 						>
 							{brokerPath && (
-								<Image src={`/brokers/${brokerPath}.png`} alt="Logo" fill objectFit="contain" />
+								<Image
+									src={`/brokers/${brokerPath}.png`}
+									alt="Logo"
+									fill
+									style={{
+										objectFit: "contain",
+									}}
+								/>
 							)}
 						</Box>
 					</Box>
@@ -129,8 +138,8 @@ export default function Homepage({
 									fill
 									style={{
 										objectFit: "contain",
+										objectPosition: "left bottom",
 									}}
-									objectPosition="left bottom"
 									quality={100}
 									draggable={false}
 								/>
@@ -179,36 +188,38 @@ export default function Homepage({
 								</Box>
 							</Box>
 
-							<Box
-								sx={{
-									mb: 10,
-									backgroundColor: "#FFF",
-									width: "100%",
-									height: "128px",
-									borderRadius: "20px",
-									p: 2,
-								}}
-							>
+							{indicatorPath && (
 								<Box
 									sx={{
-										width: 40,
-										aspectRatio: "1/1",
-										// border: "1px solid",
-										// borderColor: "primary.main",
-										position: "relative",
+										mb: 10,
+										backgroundColor: "#FFF",
+										width: "100%",
+										height: "128px",
+										borderRadius: "20px",
+										p: 2,
 									}}
 								>
-									<Image
-										src={`/indicators/${indicatorPath}.png`}
-										alt="Logo"
-										fill
-										style={{
-											objectFit: "contain",
+									<Box
+										sx={{
+											width: 40,
+											aspectRatio: "1/1",
+											// border: "1px solid",
+											// borderColor: "primary.main",
+											position: "relative",
 										}}
-										quality={100}
-									/>
+									>
+										<Image
+											src={`/indicators/${indicatorPath}.png`}
+											alt="Logo"
+											fill
+											style={{
+												objectFit: "contain",
+											}}
+											quality={100}
+										/>
+									</Box>
 								</Box>
-							</Box>
+							)}
 						</Box>
 					</Box>
 				</Box>

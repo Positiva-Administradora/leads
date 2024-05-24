@@ -4,8 +4,15 @@ import { decrypt } from "@/utils/crypto";
 import { getDefaultServerSideProps } from "@/utils/get-default-server-side-props";
 import { GetServerSidePropsContext } from "next";
 
-export default function Index(pageProps: EnvironmentProps) {
-	return <Homepage {...pageProps} />;
+export default function Index(
+	props: EnvironmentProps & {
+		userFullName: string;
+		brokerId: number;
+		channelId: number | null;
+		indicatorId: number | null;
+	},
+) {
+	return <Homepage {...props} />;
 }
 
 export const getServerSideProps = (context: GetServerSidePropsContext) => {
