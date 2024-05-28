@@ -1,7 +1,7 @@
 # Dockerfile
 
 # Start from the official Node.js LTS base image
-FROM node:18.16.0
+FROM node:20.5.1
 
 # Set the working directory to /app
 WORKDIR /app
