@@ -1,0 +1,62 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: |
+          /root/.cache/docker
+          /var/lib/docker
+        key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+
+    - name: Log in to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-and-push
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        NEXT_PUBLIC_CHATWOOT_BASE_URL_WIZ: ${{ secrets.NEXT_PUBLIC_CHATWOOT_BASE_URL_WIZ }}
+        NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_WIZ: ${{ secrets.NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_WIZ }}
+      run: |
+        IMAGE_TAG=leads-${{ github.sha }}
+        echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+        docker build --build-arg NEXT_PUBLIC_CHATWOOT_BASE_URL_WIZ=$NEXT_PUBLIC_CHATWOOT_BASE_URL_WIZ --build-arg NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_WIZ=$NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_WIZ -t $ECR_REGISTRY/prd-repo:$IMAGE_TAG -f ./infra/Dockerfile .
+        docker push $ECR_REGISTRY/prd-repo:$IMAGE_TAG
+
+    - name: Update GitOps Repo
+      run: |
+        # Clone your GitOps repo
+        git clone https://${{ secrets.PAT }}@github.com/Positiva-Administradora/deployment.git
+
+        # Change to the directory containing your manifests
+        cd deployment/leads
+
+        # Replace the image tag in your manifests
+        sed -i "s/leads-[0-9a-f]\{40\}/leads-${{ github.sha }}/g" deployment.yaml
+
+
+        # Commit and push the changes
+        git config --global user.email "talk@gabrielaranha.com"
+        git config --global user.name "Gabriel Aranha"
+        git commit -am "Update image tag to $IMAGE_TAG"
+        git push
