@@ -1,3 +1,4 @@
+import { Chatwoot } from "@/components/chatwoot";
 import { Circle } from "@/components/circle";
 import { Wrapper } from "@/components/wrapper";
 import { getWhiteLabel } from "@/config";
@@ -232,11 +233,12 @@ export default function Homepage({
 				>
 					<Box
 						sx={{
-							backgroundColor: "#FFF",
 							flex: 1,
 							mb: 4.6,
 						}}
-					></Box>
+					>
+						<Chatwoot />
+					</Box>
 
 					<Box
 						sx={{

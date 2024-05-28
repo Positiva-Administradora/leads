@@ -13,7 +13,7 @@ export const getEnvironment = (contextHost: string): EnvironmentProps => {
 	const isDevelopmentEnvironment = ["dev", "hml"].includes(ambientOnHost);
 
 	let ambient = "prd";
-	let env = host[0];
+	let env = host[1];
 
 	if (isDevelopmentEnvironment) {
 		ambient = ambientOnHost;
