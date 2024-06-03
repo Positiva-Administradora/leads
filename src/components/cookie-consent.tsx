@@ -9,10 +9,10 @@ export const CookieConsent = () => {
 	return (
 		<CookiePopup
 			buttonText="Entendi"
-			style={{ backgroundColor: theme.palette.primary.main }}
+			style={{ backgroundColor: theme.palette.secondary.main }}
 			cookieName="cookieConsent"
 			buttonStyle={{
-				backgroundColor: theme.palette.secondary.main,
+				backgroundColor: theme.palette.primary.main,
 				color: "#FFF",
 				fontSize: "1rem",
 				borderRadius: "40px",

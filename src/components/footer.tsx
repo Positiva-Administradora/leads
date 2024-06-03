@@ -1,12 +1,18 @@
 import { getWhiteLabel } from "@/config";
 import { EnvironmentProps } from "@/types/environment";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, useTheme, Stack, Typography } from "@mui/material";
+import getConfig from "next/config";
 import Image from "next/image";
+import { lighten } from "polished";
 
 import { Wrapper } from "./wrapper";
 
+const { publicRuntimeConfig } = getConfig();
+
 export const Footer = ({ env }: EnvironmentProps) => {
+	const version = publicRuntimeConfig?.version || "0.0.0";
+
 	const whiteLabel = getWhiteLabel(env);
 
 	const ansNumber = whiteLabel?.ansNumber;
@@ -15,9 +21,11 @@ export const Footer = ({ env }: EnvironmentProps) => {
 	const register = whiteLabel?.register;
 	const social = whiteLabel?.social;
 	const terms = whiteLabel?.terms;
+	const title = whiteLabel?.title;
 
 	const logoAlt = logo?.alt;
 	const logoPath = `${logo?.slug}.${logo?.format}`;
+	const theme = useTheme();
 
 	return (
 		<Box
@@ -202,6 +210,23 @@ export const Footer = ({ env }: EnvironmentProps) => {
 					</Box>
 				</Box>
 			</Wrapper>
+
+			<Box
+				sx={{ backgroundColor: lighten(0.04, theme.palette.primary.main), py: 1, color: "white" }}
+			>
+				<Typography
+					sx={{
+						fontSize: { xs: 10, md: 12 },
+						textAlign: "center",
+						width: "100%",
+					}}
+				>
+					Copyright © {new Date().getFullYear()} | {title} | Todos os direitos reservados
+				</Typography>
+				<Typography sx={{ fontSize: "0.75rem", fontWeight: "light", textAlign: "center" }}>
+					App v{version}
+				</Typography>
+			</Box>
 		</Box>
 	);
 };

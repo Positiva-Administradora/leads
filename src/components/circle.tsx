@@ -9,12 +9,12 @@ export const Circle = () => {
 			sx={{
 				position: "absolute",
 				aspectRatio: "1/1",
-				height: "100%",
+				height: "150vh",
 				borderRadius: "50%",
 				background: `linear-gradient(180deg, ${darken(0.01, theme.palette.terciary.main)} 0%, ${darken(0.1, theme.palette.secondary.main)} 100%)`,
 				padding: 3.5,
-				top: "-8%",
-				left: "-15%",
+				top: "-20%",
+				left: "-25%",
 			}}
 		>
 			<Box

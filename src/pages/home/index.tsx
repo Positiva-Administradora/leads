@@ -18,12 +18,12 @@ export default function Homepage({
 	channelId: number | null;
 	indicatorId: number | null;
 }) {
+	const imageByEnv = env === "wiz" ? "wizmaisvoce" : env;
+
 	const { background } = getWhiteLabel(env);
 
 	const backgroundAlt = background?.alt;
 	const backgroundPath = `/backgrounds/${background?.slug}.${background?.format}`;
-
-	const imageByEnv = env === "wiz" ? "wizmaisvoce" : env;
 
 	const channelId = query?.channelId;
 	const channelPath = channelId ? channels.find(c => c.id === channelId)?.slug : imageByEnv;
@@ -38,7 +38,7 @@ export default function Homepage({
 		<Box
 			sx={{
 				width: "100%",
-				height: "100%",
+				height: "100vh",
 			}}
 		>
 			<Box
@@ -74,8 +74,6 @@ export default function Homepage({
 							sx={{
 								width: 200,
 								height: "100%",
-								// border: "1px solid",
-								// borderColor: "primary.main",
 								position: "relative",
 							}}
 						>
@@ -96,8 +94,6 @@ export default function Homepage({
 							sx={{
 								width: 200,
 								height: "100%",
-								// border: "1px solid",
-								// borderColor: "primary.main",
 								position: "relative",
 							}}
 						>
@@ -135,6 +131,7 @@ export default function Homepage({
 							>
 								<Image
 									src={backgroundPath}
+									sizes="(min-width: 1024px) 800px, 100vw"
 									alt={backgroundAlt}
 									fill
 									style={{
