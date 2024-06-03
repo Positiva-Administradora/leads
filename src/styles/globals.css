@@ -10,3 +10,8 @@ body {
 	box-sizing: border-box;
 }
 
+#chatwoot_live_chat_widget {
+	position: absolute !important;
+	height: 100%;
+	width: 100%;
+}

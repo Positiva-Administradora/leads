@@ -3,7 +3,7 @@ import { Circle } from "@/components/circle";
 import { Wrapper } from "@/components/wrapper";
 import { getWhiteLabel } from "@/config";
 import { EnvironmentProps } from "@/types/environment";
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import Image from "next/image";
 
 import { brokers, channels, indicators } from "../manager/index.page";
@@ -229,15 +229,30 @@ export default function Homepage({
 					sx={{
 						display: "flex",
 						flexDirection: "column",
+						position: "relative",
 					}}
 				>
 					<Box
 						sx={{
 							flex: 1,
 							mb: 4.6,
+							position: "relative",
+							borderRadius: "20px",
 						}}
+						id="custom-chat-container"
 					>
 						<Chatwoot />
+
+						<Skeleton
+							variant="rectangular"
+							width="100%"
+							height="100%"
+							sx={{
+								position: "absolute",
+								inset: 0,
+								zIndex: -1,
+							}}
+						/>
 					</Box>
 
 					<Box

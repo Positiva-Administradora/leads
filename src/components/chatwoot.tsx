@@ -40,6 +40,19 @@ export const Chatwoot = () => {
 					websiteToken: process.env.NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_WIZ!,
 					baseUrl: BASE_URL,
 				});
+
+				const chatwootWidget = document.querySelector("#cw-widget-holder");
+				const chatwootIframe = document.querySelector("#chatwoot_live_chat_widget");
+
+				if (chatwootWidget && chatwootIframe) {
+					const customChatContainer = document.getElementById("custom-chat-container");
+					chatwootIframe.setAttribute("frameborder", "0");
+
+					if (customChatContainer) {
+						customChatContainer.appendChild(chatwootIframe);
+						chatwootWidget.remove();
+					}
+				}
 			};
 		})(document, "script");
 	}, []);
