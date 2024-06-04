@@ -3,7 +3,7 @@ import { Circle } from "@/components/circle";
 import { Wrapper } from "@/components/wrapper";
 import { getWhiteLabel } from "@/config";
 import { EnvironmentProps } from "@/types/environment";
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Divider, Skeleton, Typography } from "@mui/material";
 import Image from "next/image";
 
 import { brokers, channels, indicators } from "../manager/index.page";
@@ -32,7 +32,8 @@ export default function Homepage({
 	const brokerPath = brokerId ? brokers.find(c => c.id === brokerId)?.slug : "wizmaisvoce";
 
 	const indicatorId = query?.indicatorId;
-	const indicatorPath = indicatorId ? indicators.find(c => c.id === indicatorId)?.id : null;
+	const indicator = indicatorId ? indicators.find(c => c.id === indicatorId) : null;
+	const indicatorPath = `/indicators/${indicator?.id}.png`;
 
 	return (
 		<Box
@@ -88,6 +89,7 @@ export default function Homepage({
 									fill
 									priority
 									quality={100}
+									draggable={false}
 									style={{
 										objectFit: "contain",
 									}}
@@ -173,6 +175,7 @@ export default function Homepage({
 											src={`/brokers/${brokerPath}.png`}
 											alt="Logo"
 											fill
+											draggable={false}
 											style={{
 												objectFit: "contain",
 												objectPosition: "right",
@@ -226,35 +229,123 @@ export default function Homepage({
 								</Box>
 							</Box>
 
-							{indicatorPath && (
+							{indicator && (
 								<Box
 									sx={{
 										mb: 10,
 										backgroundColor: "#FFF",
 										width: "100%",
-										height: "128px",
 										borderRadius: "20px",
 										p: 2,
+										display: "flex",
+										gap: 1,
+										alignItems: "flex-start",
 									}}
 								>
 									<Box
 										sx={{
 											width: 40,
 											aspectRatio: "1/1",
-											// border: "1px solid",
-											// borderColor: "primary.main",
 											position: "relative",
 										}}
 									>
 										<Image
-											src={`/indicators/${indicatorPath}.png`}
+											src={indicatorPath}
 											alt="Logo"
 											fill
 											style={{
 												objectFit: "contain",
 											}}
+											draggable={false}
 											quality={100}
 										/>
+									</Box>
+
+									<Box>
+										<Typography
+											sx={{
+												fontSize: 14,
+												fontWeight: 300,
+											}}
+										>
+											Indicado por
+										</Typography>
+
+										<Typography
+											sx={{
+												fontSize: 20,
+												fontWeight: 700,
+												lineHeight: "110%",
+											}}
+										>
+											{indicator.name}
+										</Typography>
+
+										<Typography
+											sx={{
+												fontSize: 14,
+												fontWeight: 700,
+												mt: 0.5,
+											}}
+										>
+											{indicator.position}
+										</Typography>
+
+										<Divider
+											sx={{
+												mt: 0.5,
+												mb: 2,
+												height: 1,
+												backgroundColor: "#000",
+											}}
+										/>
+
+										<Box
+											sx={{
+												display: "flex",
+												gap: 1,
+											}}
+										>
+											<Typography
+												sx={{
+													fontSize: 14,
+													fontWeight: 300,
+												}}
+											>
+												Fale comigo
+											</Typography>
+
+											<Box
+												sx={{
+													display: "flex",
+													gap: 1,
+												}}
+											>
+												{indicator.socialLinks.map(social => (
+													<Box
+														key={social.id}
+														sx={{
+															width: 24,
+															aspectRatio: "1/1",
+															position: "relative",
+															cursor: "pointer",
+														}}
+														onClick={() => window.open(social.url, "_blank")}
+													>
+														<Image
+															src={`/social/${social.slug}.svg`}
+															alt={social.name}
+															draggable={false}
+															fill
+															style={{
+																objectFit: "contain",
+															}}
+															quality={100}
+														/>
+													</Box>
+												))}
+											</Box>
+										</Box>
 									</Box>
 								</Box>
 							)}

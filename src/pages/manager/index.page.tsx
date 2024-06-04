@@ -32,7 +32,7 @@ export const indicators = [
 				id: 1,
 				slug: "whatsapp",
 				name: "WhatsApp",
-				url: "https://www.whatsapp.com/",
+				url: "https://wa.me/21968892704",
 			},
 			{
 				id: 2,
@@ -51,7 +51,7 @@ export const indicators = [
 				id: 1,
 				slug: "whatsapp",
 				name: "WhatsApp",
-				url: "https://www.whatsapp.com/",
+				url: "https://wa.me/21968892704",
 			},
 			{
 				id: 2,
