@@ -27,47 +27,29 @@ export const positivaTheme = createTheme(defaultTheme, {
 		terciary: {
 			main: paletteColors.terciary,
 		},
-		background: {
-			main: paletteColors.background,
-			secondary: "#FFF",
-		},
-		black: {
-			main: paletteColors.black,
-		},
-		neutral: {
-			main: paletteColors.neutral,
-		},
-		gray: {
-			main: paletteColors.gray,
-			secondary: "#B9BFC7",
-		},
-		red: {
-			main: paletteColors.red,
-		},
-		success: {
-			main: paletteColors.success,
-		},
+
 		contrastBox: {
 			main: "#FFF",
 			secondary: "#EAEAEA",
 			overLight: "#F8F7F5",
 			chart: "#E5E5E5",
 		},
-		table: {
-			evenLine: "#EAEAEA",
-		},
-		title: {
-			kpis: paletteColors.secondary,
-		},
-		report: {
-			text: paletteColors.secondary,
-			table: {
-				primary: paletteColors.secondary,
-				secondary: "#FFF",
-				terciary: "#969798",
+
+		gradient: {
+			main: {
+				start: "#00B3E3",
+				end: "#00B3E3",
 			},
-			circleLine: paletteColors.primary,
-			line: paletteColors.secondary,
+
+			highlight: {
+				start: "#00DBFA",
+				end: "#00CDF7",
+			},
+
+			accent: {
+				start: "#00D7FD",
+				end: "#00BCF9",
+			},
 		},
 	},
 
