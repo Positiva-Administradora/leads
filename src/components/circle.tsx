@@ -1,5 +1,4 @@
 import { Box, useTheme } from "@mui/material";
-import { darken } from "polished";
 
 export const Circle = () => {
 	const theme = useTheme();
@@ -9,12 +8,12 @@ export const Circle = () => {
 			sx={{
 				position: "absolute",
 				aspectRatio: "1/1",
-				height: "100%",
+				height: "150vh",
 				borderRadius: "50%",
-				background: `linear-gradient(180deg, ${darken(0.01, theme.palette.terciary.main)} 0%, ${darken(0.1, theme.palette.secondary.main)} 100%)`,
-				padding: 3.5,
-				top: "-8%",
-				left: "-15%",
+				background: `linear-gradient(180deg, ${theme.palette.gradient.accent.start} 0%, ${theme.palette.gradient.accent.end} 100%)`,
+				padding: 4.5,
+				top: "-20%",
+				left: "-25%",
 			}}
 		>
 			<Box
@@ -22,7 +21,7 @@ export const Circle = () => {
 					width: "100%",
 					height: "100%",
 					borderRadius: "50%",
-					background: `linear-gradient(180deg, ${theme.palette.terciary.main} 0%, ${darken(0.05, theme.palette.terciary.main)} 100%)`,
+					background: `linear-gradient(180deg, ${theme.palette.gradient.highlight.start} 0%, ${theme.palette.gradient.highlight.end} 100%)`,
 				}}
 			/>
 		</Box>

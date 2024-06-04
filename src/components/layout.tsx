@@ -16,7 +16,6 @@ export const Layout = ({ children, ...pageProps }: LayoutProps) => {
 			sx={{
 				display: "flex",
 				flexDirection: "column",
-				height: "100vh",
 			}}
 		>
 			<CookieConsent />

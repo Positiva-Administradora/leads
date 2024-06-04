@@ -27,47 +27,29 @@ export const wizTheme = createTheme(defaultTheme, {
 		terciary: {
 			main: paletteColors.terciary,
 		},
-		background: {
-			main: paletteColors.background,
-			secondary: paletteColors.background,
-		},
-		black: {
-			main: paletteColors.black,
-		},
-		neutral: {
-			main: paletteColors.neutral,
-		},
-		gray: {
-			main: paletteColors.gray,
-			secondary: "#B9BFC7",
-		},
-		red: {
-			main: paletteColors.red,
-		},
-		success: {
-			main: paletteColors.success,
-		},
+
 		contrastBox: {
 			main: "#F8F7F5",
 			secondary: "#FFF",
 			overLight: "#F6EFE6",
 			chart: "#eae1d8",
 		},
-		table: {
-			evenLine: "#F8F7F5",
-		},
-		title: {
-			kpis: paletteColors.primary,
-		},
-		report: {
-			text: paletteColors.primary,
-			table: {
-				primary: paletteColors.primary,
-				secondary: paletteColors.primary,
-				terciary: "#ECDDCF",
+
+		gradient: {
+			main: {
+				start: "#F08300",
+				end: "#F08300",
 			},
-			circleLine: paletteColors.secondary,
-			line: paletteColors.primary,
+
+			highlight: {
+				start: "#F2B300",
+				end: "#EBA200",
+			},
+
+			accent: {
+				start: "#FDA900",
+				end: "#EE6900",
+			},
 		},
 	},
 

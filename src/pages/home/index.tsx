@@ -3,7 +3,7 @@ import { Circle } from "@/components/circle";
 import { Wrapper } from "@/components/wrapper";
 import { getWhiteLabel } from "@/config";
 import { EnvironmentProps } from "@/types/environment";
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Divider, Skeleton, Typography } from "@mui/material";
 import Image from "next/image";
 
 import { brokers, channels, indicators } from "../manager/index.page";
@@ -18,12 +18,12 @@ export default function Homepage({
 	channelId: number | null;
 	indicatorId: number | null;
 }) {
+	const imageByEnv = env === "wiz" ? "wizmaisvoce" : env;
+
 	const { background } = getWhiteLabel(env);
 
 	const backgroundAlt = background?.alt;
 	const backgroundPath = `/backgrounds/${background?.slug}.${background?.format}`;
-
-	const imageByEnv = env === "wiz" ? "wizmaisvoce" : env;
 
 	const channelId = query?.channelId;
 	const channelPath = channelId ? channels.find(c => c.id === channelId)?.slug : imageByEnv;
@@ -32,13 +32,14 @@ export default function Homepage({
 	const brokerPath = brokerId ? brokers.find(c => c.id === brokerId)?.slug : "wizmaisvoce";
 
 	const indicatorId = query?.indicatorId;
-	const indicatorPath = indicatorId ? indicators.find(c => c.id === indicatorId)?.id : null;
+	const indicator = indicatorId ? indicators.find(c => c.id === indicatorId) : null;
+	const indicatorPath = `/indicators/${indicator?.id}.png`;
 
 	return (
 		<Box
 			sx={{
 				width: "100%",
-				height: "100%",
+				height: "100vh",
 			}}
 		>
 			<Box
@@ -58,15 +59,19 @@ export default function Homepage({
 					display: "grid",
 					height: "100%",
 					paddingTop: 4,
-					gridTemplateColumns: "2fr 1fr",
-					gap: 6.5,
+					gridTemplateColumns: "minmax(0, 600px) 1fr",
 				}}
 			>
-				<Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+				{/* Canal / Background */}
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						gap: 3,
+					}}
+				>
 					<Box
 						sx={{
-							display: "flex",
-							justifyContent: "space-between",
 							height: 100,
 						}}
 					>
@@ -74,8 +79,6 @@ export default function Homepage({
 							sx={{
 								width: 200,
 								height: "100%",
-								// border: "1px solid",
-								// borderColor: "primary.main",
 								position: "relative",
 							}}
 						>
@@ -84,28 +87,9 @@ export default function Homepage({
 									src={`/channels/${channelPath}.png`}
 									alt="Logo"
 									fill
+									priority
 									quality={100}
-									style={{
-										objectFit: "contain",
-									}}
-								/>
-							)}
-						</Box>
-
-						<Box
-							sx={{
-								width: 200,
-								height: "100%",
-								// border: "1px solid",
-								// borderColor: "primary.main",
-								position: "relative",
-							}}
-						>
-							{brokerPath && (
-								<Image
-									src={`/brokers/${brokerPath}.png`}
-									alt="Logo"
-									fill
+									draggable={false}
 									style={{
 										objectFit: "contain",
 									}}
@@ -116,34 +100,89 @@ export default function Homepage({
 
 					<Box
 						sx={{
-							display: "grid",
-							gridTemplateColumns: "minmax(0, 600px) 280px",
+							position: "relative",
+							width: "100%",
 							height: "100%",
+						}}
+					>
+						<Image
+							src={backgroundPath}
+							sizes="(min-width: 1024px) 800px, 100vw"
+							alt={backgroundAlt}
+							fill
+							style={{
+								objectFit: "contain",
+								objectPosition: "left bottom",
+							}}
+							quality={100}
+							draggable={false}
+						/>
+					</Box>
+				</Box>
+
+				<Box
+					sx={{
+						display: "grid",
+						gridTemplateColumns: "280px 1fr",
+						gap: 6.5,
+					}}
+				>
+					{/* Corretora Master / Indicador  */}
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							gap: 3,
 						}}
 					>
 						<Box
 							sx={{
-								position: "relative",
+								height: 100,
+								width: "70%",
+								ml: "auto",
 							}}
 						>
 							<Box
 								sx={{
-									position: "relative",
-									width: "100%",
-									height: "100%",
+									height: 70,
+									display: "flex",
+									justifyContent: "flex-end",
+									alignItems: "center",
+									gap: 2,
 								}}
 							>
-								<Image
-									src={backgroundPath}
-									alt={backgroundAlt}
-									fill
-									style={{
-										objectFit: "contain",
-										objectPosition: "left bottom",
+								<Typography
+									sx={{
+										fontSize: 14,
+										fontWeight: 700,
+										color: "#FFF",
+										textTransform: "uppercase",
+										whiteSpace: "nowrap",
 									}}
-									quality={100}
-									draggable={false}
-								/>
+								>
+									Powered by
+								</Typography>
+
+								<Box
+									sx={{
+										width: "100%",
+										height: "100%",
+										position: "relative",
+									}}
+								>
+									{brokerPath && (
+										<Image
+											src={`/brokers/${brokerPath}.png`}
+											alt="Logo"
+											fill
+											draggable={false}
+											style={{
+												objectFit: "contain",
+												objectPosition: "right",
+											}}
+										/>
+									)}
+								</Box>
 							</Box>
 						</Box>
 
@@ -154,6 +193,7 @@ export default function Homepage({
 								justifyContent: "space-between",
 								position: "relative",
 								zIndex: 3,
+								height: "100%",
 							}}
 						>
 							<Box
@@ -184,90 +224,179 @@ export default function Homepage({
 											fontWeight: 300,
 										}}
 									>
-										Texto de Apoio - Canal
+										Planos exclusivos para os médicos do CREMESP.
 									</Typography>
 								</Box>
 							</Box>
 
-							{indicatorPath && (
+							{indicator && (
 								<Box
 									sx={{
 										mb: 10,
 										backgroundColor: "#FFF",
 										width: "100%",
-										height: "128px",
 										borderRadius: "20px",
 										p: 2,
+										display: "flex",
+										gap: 1,
+										alignItems: "flex-start",
 									}}
 								>
 									<Box
 										sx={{
 											width: 40,
 											aspectRatio: "1/1",
-											// border: "1px solid",
-											// borderColor: "primary.main",
 											position: "relative",
 										}}
 									>
 										<Image
-											src={`/indicators/${indicatorPath}.png`}
+											src={indicatorPath}
 											alt="Logo"
 											fill
 											style={{
 												objectFit: "contain",
 											}}
+											draggable={false}
 											quality={100}
 										/>
+									</Box>
+
+									<Box>
+										<Typography
+											sx={{
+												fontSize: 14,
+												fontWeight: 300,
+											}}
+										>
+											Indicado por
+										</Typography>
+
+										<Typography
+											sx={{
+												fontSize: 20,
+												fontWeight: 700,
+												lineHeight: "110%",
+											}}
+										>
+											{indicator.name}
+										</Typography>
+
+										<Typography
+											sx={{
+												fontSize: 14,
+												fontWeight: 700,
+												mt: 0.5,
+											}}
+										>
+											{indicator.position}
+										</Typography>
+
+										<Divider
+											sx={{
+												mt: 0.5,
+												mb: 2,
+												height: 1,
+												backgroundColor: "#000",
+											}}
+										/>
+
+										<Box
+											sx={{
+												display: "flex",
+												gap: 1,
+											}}
+										>
+											<Typography
+												sx={{
+													fontSize: 14,
+													fontWeight: 300,
+												}}
+											>
+												Fale comigo
+											</Typography>
+
+											<Box
+												sx={{
+													display: "flex",
+													gap: 1,
+												}}
+											>
+												{indicator.socialLinks.map(social => (
+													<Box
+														key={social.id}
+														sx={{
+															width: 24,
+															aspectRatio: "1/1",
+															position: "relative",
+															cursor: "pointer",
+														}}
+														onClick={() => window.open(social.url, "_blank")}
+													>
+														<Image
+															src={`/social/${social.slug}.svg`}
+															alt={social.name}
+															draggable={false}
+															fill
+															style={{
+																objectFit: "contain",
+															}}
+															quality={100}
+														/>
+													</Box>
+												))}
+											</Box>
+										</Box>
 									</Box>
 								</Box>
 							)}
 						</Box>
 					</Box>
-				</Box>
 
-				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "column",
-						position: "relative",
-					}}
-				>
+					{/* Chat */}
 					<Box
 						sx={{
-							flex: 1,
-							mb: 4.6,
+							display: "flex",
+							flexDirection: "column",
 							position: "relative",
-							borderRadius: "20px",
 						}}
-						id="custom-chat-container"
 					>
-						<Chatwoot />
-
-						<Skeleton
-							variant="rectangular"
-							width="100%"
-							height="100%"
+						<Box
 							sx={{
-								position: "absolute",
-								inset: 0,
-								zIndex: -1,
+								flex: 1,
+								mb: 4.6,
+								position: "relative",
+								borderRadius: "20px",
 							}}
-						/>
-					</Box>
+							id="custom-chat-container"
+						>
+							<Chatwoot />
 
-					<Box
-						sx={{
-							mb: 5.75,
-						}}
-					>
-						<Typography
+							<Skeleton
+								variant="rectangular"
+								width="100%"
+								height="100%"
+								sx={{
+									position: "absolute",
+									inset: 0,
+									zIndex: -1,
+								}}
+							/>
+						</Box>
+
+						<Box
 							sx={{
-								fontSize: 14,
-								color: "#FFF",
+								mb: 5.75,
 							}}
 						>
-							*Ao continuar você estará de acordo com nossa Política de Privacidade.
-						</Typography>
+							<Typography
+								sx={{
+									fontSize: 14,
+									color: "#FFF",
+								}}
+							>
+								*Ao continuar você estará de acordo com nossa Política de Privacidade.
+							</Typography>
+						</Box>
 					</Box>
 				</Box>
 			</Wrapper>

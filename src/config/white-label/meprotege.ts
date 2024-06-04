@@ -5,9 +5,9 @@ import { darken } from "polished";
 import { buttonVariants } from "../buttonsVariants";
 
 export const paletteColors = {
-	primary: "#EB145F",
-	secondary: "#F69420",
-	terciary: "#F15440",
+	primary: "#A740D7",
+	secondary: "#484848",
+	terciary: "#484848",
 	background: "#F5F5F5",
 	black: "#4F4F4F",
 	neutral: "#F5F5F5",
@@ -27,47 +27,28 @@ export const meProtegeTheme = createTheme(defaultTheme, {
 		terciary: {
 			main: paletteColors.terciary,
 		},
-		background: {
-			main: "#F5F5F5",
-			secondary: "#FFF",
-		},
-		black: {
-			main: paletteColors.black,
-		},
-		neutral: {
-			main: paletteColors.neutral,
-		},
-		gray: {
-			main: paletteColors.gray,
-			secondary: "#B9BFC7",
-		},
-		red: {
-			main: paletteColors.red,
-		},
-		success: {
-			main: paletteColors.success,
-		},
 		contrastBox: {
 			main: "#FFF",
 			secondary: "#E4E4E4",
 			overLight: "#E4E4E4",
 			chart: "#eae1d8",
 		},
-		table: {
-			evenLine: "#E4E4E4",
-		},
-		title: {
-			kpis: paletteColors.primary,
-		},
-		report: {
-			text: paletteColors.primary,
-			table: {
-				primary: paletteColors.primary,
-				secondary: paletteColors.primary,
-				terciary: "#969798",
+
+		gradient: {
+			main: {
+				start: "#484848",
+				end: "#484848",
 			},
-			circleLine: paletteColors.secondary,
-			line: paletteColors.primary,
+
+			highlight: {
+				start: "#484848",
+				end: "#000000",
+			},
+
+			accent: {
+				start: "#AE52D9",
+				end: "#2D1438",
+			},
 		},
 	},
 

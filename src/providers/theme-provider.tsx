@@ -3,6 +3,7 @@ import { ReactNode, useMemo } from "react";
 import { getWhiteLabel } from "@/config";
 import { useEnvironment } from "@/store/useEnvironment";
 import { EnvironmentProps } from "@/types/environment";
+import { Global, css } from "@emotion/react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material";
 import Head from "next/head";
 
@@ -37,10 +38,31 @@ export const ThemeProvider = ({
 
 	return (
 		<MuiThemeProvider theme={theme}>
+			<Global
+				styles={css`
+					body::-webkit-scrollbar {
+						scrollbar-gutter: stable;
+						width: 7px;
+					}
+
+					body::-webkit-scrollbar-track {
+						background: #fff;
+					}
+
+					body::-webkit-scrollbar-thumb {
+						background: ${theme.palette.primary.main};
+					}
+
+					body::-webkit-scrollbar-thumb:hover {
+						background: ${theme.palette.secondary.main};
+					}
+				`}
+			/>
 			<Head>
 				<title>{title}</title>
 				<link rel="icon" href={`/icons/${favicon}.png`} />
 			</Head>
+
 			{children}
 		</MuiThemeProvider>
 	);
