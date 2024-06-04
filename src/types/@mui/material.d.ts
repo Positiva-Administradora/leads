@@ -6,47 +6,28 @@ declare module "@mui/material/styles/createPalette" {
 			main: string;
 		};
 
-		background: {
-			main: string;
-			secondary: string;
-		};
-		black: {
-			main: string;
-		};
-		neutral: {
-			main: string;
-		};
-		gray: {
-			main: string;
-			secondary: string;
-		};
-		red: {
-			main: string;
-		};
-		success: {
-			main: string;
-		};
 		contrastBox: {
 			main: string;
 			secondary: string;
 			overLight: string;
 			chart: string;
 		};
-		table: {
-			evenLine: string;
-		};
-		title: {
-			kpis: string;
-		};
-		report: {
-			text: string;
-			table: {
-				primary: string;
-				secondary: string;
-				terciary: string;
+
+		gradient: {
+			main: {
+				start: string;
+				end: string;
 			};
-			circleLine: string;
-			line: string;
+
+			highlight: {
+				start: string;
+				end: string;
+			};
+
+			accent: {
+				start: string;
+				end: string;
+			};
 		};
 	}
 }
