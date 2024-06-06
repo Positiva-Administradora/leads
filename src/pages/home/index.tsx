@@ -59,15 +59,24 @@ export default function Homepage({
 					display: "grid",
 					height: "100%",
 					paddingTop: 4,
-					gridTemplateColumns: "minmax(0, 600px) 1fr",
+					gridTemplateColumns: {
+						xl: "minmax(400px, 600px) 1fr",
+						lg: "minmax(0, 600px) 1fr",
+						md: "minmax(0, 1fr) 1fr",
+					},
+					gap: 2,
+
+					position: "relative",
 				}}
 			>
 				{/* Canal / Background */}
+
 				<Box
 					sx={{
 						display: "flex",
 						flexDirection: "column",
 						gap: 3,
+						position: "relative",
 					}}
 				>
 					<Box
@@ -100,9 +109,25 @@ export default function Homepage({
 
 					<Box
 						sx={{
-							position: "relative",
-							width: "100%",
-							height: "100%",
+							width: {
+								xl: "100%",
+								xs: "500px",
+							},
+							height: {
+								xl: "100%",
+								xs: "80%",
+							},
+							zIndex: 3,
+							bottom: 0,
+							position: {
+								xl: "relative",
+								xs: "absolute",
+							},
+
+							display: {
+								lg: "block",
+								xs: "none",
+							},
 						}}
 					>
 						<Image
@@ -123,7 +148,7 @@ export default function Homepage({
 				<Box
 					sx={{
 						display: "grid",
-						gridTemplateColumns: "280px 1fr",
+						gridTemplateColumns: "280px minmax(400px, 1fr)",
 						gap: 6.5,
 					}}
 				>
@@ -133,6 +158,7 @@ export default function Homepage({
 							display: "flex",
 							flexDirection: "column",
 							gap: 3,
+							height: "85%",
 						}}
 					>
 						<Box
@@ -232,7 +258,6 @@ export default function Homepage({
 							{indicator && (
 								<Box
 									sx={{
-										mb: 10,
 										backgroundColor: "#FFF",
 										width: "100%",
 										borderRadius: "20px",
@@ -358,14 +383,17 @@ export default function Homepage({
 							display: "flex",
 							flexDirection: "column",
 							position: "relative",
+							height: "100%",
 						}}
 					>
 						<Box
 							sx={{
-								flex: 1,
 								mb: 4.6,
 								position: "relative",
 								borderRadius: "20px",
+								height: "85%",
+								filter:
+									"drop-shadow(0px 287px 115px rgba(0, 0, 0, 0.01)) drop-shadow(0px 161px 97px rgba(0, 0, 0, 0.05)) drop-shadow(0px 72px 72px rgba(0, 0, 0, 0.09)) drop-shadow(0px 18px 39px rgba(0, 0, 0, 0.1))",
 							}}
 							id="custom-chat-container"
 						>
@@ -379,19 +407,17 @@ export default function Homepage({
 									position: "absolute",
 									inset: 0,
 									zIndex: -1,
+									borderRadius: "20px",
 								}}
 							/>
 						</Box>
 
-						<Box
-							sx={{
-								mb: 5.75,
-							}}
-						>
+						<Box>
 							<Typography
 								sx={{
 									fontSize: 14,
 									color: "#FFF",
+									mb: 2,
 								}}
 							>
 								*Ao continuar você estará de acordo com nossa Política de Privacidade.
