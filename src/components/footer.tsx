@@ -97,8 +97,16 @@ export const Footer = ({ env }: EnvironmentProps) => {
 								color: "white",
 								":hover": { textDecoration: "underline" },
 								cursor: "pointer",
-								width: "min-content",
-								whiteSpace: "nowrap",
+								width: {
+									md: "fit-content",
+									xs: "100%",
+								},
+								whiteSpace: {
+									md: "nowrap",
+									xs: "wrap",
+								},
+
+								mx: "auto",
 							}}
 							onClick={() => window.open(terms, "_blank")}
 						>
