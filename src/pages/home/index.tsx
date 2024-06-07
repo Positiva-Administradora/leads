@@ -390,8 +390,8 @@ export default function Homepage({
 									md: "85%",
 									xs: "650px",
 								},
-								filter:
-									"drop-shadow(0px 287px 115px rgba(0, 0, 0, 0.01)) drop-shadow(0px 161px 97px rgba(0, 0, 0, 0.05)) drop-shadow(0px 72px 72px rgba(0, 0, 0, 0.09)) drop-shadow(0px 18px 39px rgba(0, 0, 0, 0.1))",
+								boxShadow:
+									"0px 287px 115px rgba(0, 0, 0, 0.01), 0px 161px 97px rgba(0, 0, 0, 0.05)",
 							}}
 							id="custom-chat-container"
 						>
