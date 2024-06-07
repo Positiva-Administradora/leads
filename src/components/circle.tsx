@@ -12,8 +12,14 @@ export const Circle = () => {
 				borderRadius: "50%",
 				background: `linear-gradient(180deg, ${theme.palette.gradient.accent.start} 0%, ${theme.palette.gradient.accent.end} 100%)`,
 				padding: 4.5,
-				top: "-20%",
-				left: "-25%",
+				top: {
+					md: "-20%",
+					xs: "-10%",
+				},
+				left: {
+					md: "-25%",
+					xs: "-150%",
+				},
 			}}
 		>
 			<Box
