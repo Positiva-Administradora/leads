@@ -1,15 +1,13 @@
 import Homepage from "@/pages/home/";
 import { EnvironmentProps } from "@/types/environment";
+import { QueryProps } from "@/types/query";
 import { decrypt } from "@/utils/crypto";
 import { getDefaultServerSideProps } from "@/utils/get-default-server-side-props";
 import { GetServerSidePropsContext } from "next";
 
 export default function Index(
 	props: EnvironmentProps & {
-		userFullName: string;
-		brokerId: number;
-		channelId: number | null;
-		indicatorId: number | null;
+		query: QueryProps;
 	},
 ) {
 	return <Homepage {...props} />;
@@ -28,7 +26,10 @@ export const getServerSideProps = (context: GetServerSidePropsContext) => {
 	return {
 		props: {
 			...props.props,
-			...result,
+
+			query: {
+				...result,
+			},
 		},
 	};
 };

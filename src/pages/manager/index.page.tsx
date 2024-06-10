@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { Wrapper } from "@/components/wrapper";
@@ -8,19 +8,10 @@ import { getDefaultServerSideProps } from "@/utils/get-default-server-side-props
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import LinkIcon from "@mui/icons-material/Link";
 import LoopIcon from "@mui/icons-material/Loop";
-import {
-	Autocomplete,
-	Box,
-	Button,
-	Container,
-	Divider,
-	Grid,
-	TextField,
-	Typography,
-	IconButton,
-} from "@mui/material";
+import { Box, Button, Container, Divider, Typography, IconButton } from "@mui/material";
 import { GetServerSidePropsContext } from "next";
-import Image from "next/image";
+
+import { Form } from "./components/form";
 
 export const indicators = [
 	{
@@ -98,7 +89,7 @@ export const channels = [
 	},
 ];
 
-interface Form {
+export interface FormProps {
 	userFullName: string;
 	brokerId: number | null;
 	channelId: number | null;
@@ -108,7 +99,7 @@ interface Form {
 export default function Manager() {
 	const [encryptedLink, setEncryptedLink] = useState<string | null>(null);
 
-	const { control, handleSubmit, reset, formState } = useForm<Form>({
+	const { control, handleSubmit, reset, formState } = useForm<FormProps>({
 		defaultValues: {
 			userFullName: "",
 			brokerId: null,
@@ -117,7 +108,7 @@ export default function Manager() {
 		},
 	});
 
-	async function submit(data: Form) {
+	async function submit(data: FormProps) {
 		const encrypted = encrypt(JSON.stringify(data));
 
 		const origin = window.location.origin;
@@ -156,217 +147,7 @@ export default function Manager() {
 						boxShadow: 2,
 					}}
 				>
-					<Grid container spacing={2}>
-						<Grid item xs={12}>
-							<Controller
-								control={control}
-								name="userFullName"
-								render={({ field }) => (
-									<TextField label="Nome Completo do Cliente" required fullWidth {...field} />
-								)}
-							/>
-						</Grid>
-
-						<Grid item xs={12}>
-							<Controller
-								control={control}
-								name="brokerId"
-								rules={{ required: "Campo obrigatório" }}
-								render={({ field: { value, onChange, ...props }, fieldState: { error } }) => {
-									return (
-										<Autocomplete
-											{...props}
-											options={brokers}
-											value={brokers?.find(option => option.id === value) || null}
-											onChange={(_, data) => onChange(data?.id)}
-											getOptionLabel={option => option.name}
-											renderInput={params => (
-												<TextField
-													{...params}
-													required
-													label="Corretora (Master)"
-													variant="outlined"
-													helperText={error?.message}
-													error={!!error?.message}
-												/>
-											)}
-											renderOption={(props, option, _, ownerState) => (
-												<Box
-													{...props}
-													sx={{
-														padding: "5px",
-														display: "flex",
-														justifyContent: "space-between",
-														flex: 1,
-														gap: 2,
-													}}
-													component="li"
-												>
-													{ownerState.getOptionLabel(option)}
-
-													<Box
-														sx={{
-															ml: "auto",
-															p: 0.5,
-															backgroundColor: "secondary.main",
-															borderRadius: 2,
-														}}
-													>
-														<Box
-															sx={{
-																position: "relative",
-																width: 40,
-																aspectRatio: "1/1",
-															}}
-														>
-															<Image
-																src={`/brokers/${option.slug}.png`}
-																fill
-																style={{
-																	objectFit: "contain",
-																}}
-																alt={option.name}
-															/>
-														</Box>
-													</Box>
-												</Box>
-											)}
-										/>
-									);
-								}}
-							/>
-						</Grid>
-
-						<Grid item xs={12}>
-							<Controller
-								control={control}
-								name="channelId"
-								render={({ field: { value, onChange, ...props }, fieldState: { error } }) => {
-									return (
-										<Autocomplete
-											{...props}
-											options={channels}
-											value={channels?.find(option => option.id === value) || null}
-											onChange={(_, data) => onChange(data?.id)}
-											getOptionLabel={option => option.name}
-											renderInput={params => (
-												<TextField
-													{...params}
-													label="Canal"
-													variant="outlined"
-													helperText={error?.message}
-													error={!!error?.message}
-												/>
-											)}
-											renderOption={(props, option, _, ownerState) => (
-												<Box
-													{...props}
-													sx={{
-														padding: "5px",
-														display: "flex",
-														justifyContent: "space-between",
-														flex: 1,
-														gap: 2,
-													}}
-													component="li"
-												>
-													{ownerState.getOptionLabel(option)}
-
-													<Box
-														sx={{
-															ml: "auto",
-															p: 0.5,
-															backgroundColor: "secondary.main",
-															borderRadius: 2,
-														}}
-													>
-														<Box
-															sx={{
-																position: "relative",
-																width: 40,
-																aspectRatio: "1/1",
-															}}
-														>
-															<Image
-																src={`/channels/${option.slug}.png`}
-																fill
-																style={{
-																	objectFit: "contain",
-																}}
-																alt={option.name}
-															/>
-														</Box>
-													</Box>
-												</Box>
-											)}
-										/>
-									);
-								}}
-							/>
-						</Grid>
-
-						<Grid item xs={12}>
-							<Controller
-								control={control}
-								name="indicatorId"
-								render={({ field: { value, onChange, ...props }, fieldState: { error } }) => {
-									return (
-										<Autocomplete
-											{...props}
-											options={indicators}
-											value={indicators?.find(option => option.id === value) || null}
-											onChange={(_, data) => onChange(data?.id)}
-											getOptionLabel={option => option.name}
-											groupBy={option => option.position}
-											renderInput={params => (
-												<TextField
-													{...params}
-													label="Indicador"
-													variant="outlined"
-													helperText={error?.message}
-													error={!!error?.message}
-												/>
-											)}
-											renderOption={(props, option, _, ownerState) => (
-												<Box
-													{...props}
-													sx={{
-														padding: "5px",
-														display: "flex",
-														justifyContent: "space-between",
-														flex: 1,
-														gap: 2,
-													}}
-													component="li"
-												>
-													{ownerState.getOptionLabel(option)}
-
-													<Box
-														sx={{
-															position: "relative",
-
-															ml: "auto",
-															width: 30,
-															aspectRatio: "1/1",
-														}}
-													>
-														<Image
-															src={`/indicators/${option.id}.png`}
-															fill
-															style={{
-																objectFit: "contain",
-															}}
-															alt={option.name}
-														/>
-													</Box>
-												</Box>
-											)}
-										/>
-									);
-								}}
-							/>
-						</Grid>
-					</Grid>
+					<Form control={control} />
 
 					<Divider sx={{ my: 2 }} />
 
