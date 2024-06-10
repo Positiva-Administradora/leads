@@ -1,19 +1,17 @@
 import { brokers, channels } from "@/pages/manager/index.page";
 import { EnvironmentProps } from "@/types/environment";
+import { QueryProps } from "@/types/query";
 import { Box, SxProps, Typography } from "@mui/material";
 import Image from "next/image";
 
 export const UpperSide = ({
 	env,
 	sx,
-	...query
+	query,
 }: {
 	env: EnvironmentProps["env"];
 	sx?: SxProps;
-	userFullName: string;
-	brokerId: number;
-	channelId: number | null;
-	indicatorId: number | null;
+	query: QueryProps;
 }) => {
 	const imageByEnv = env === "wiz" ? "wizmaisvoce" : env;
 
