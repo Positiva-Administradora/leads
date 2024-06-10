@@ -6,7 +6,7 @@ import { EnvironmentProps } from "@/types/environment";
 import { Box, Divider, Skeleton, Typography } from "@mui/material";
 import Image from "next/image";
 
-import { indicators } from "../manager/index.page";
+import { channels, indicators } from "../manager/index.page";
 import { UpperSide } from "./components/upperside";
 
 export default function Homepage({
@@ -27,6 +27,9 @@ export default function Homepage({
 	const indicatorId = query?.indicatorId;
 	const indicator = indicatorId ? indicators.find(c => c.id === indicatorId) : null;
 	const indicatorPath = `/indicators/${indicator?.id}.png`;
+
+	const channelId = query?.channelId;
+	const channelSupportText = channelId ? channels.find(c => c.id === channelId)?.supportText : null;
 
 	return (
 		<Box
@@ -207,17 +210,19 @@ export default function Homepage({
 											</Typography>
 										</Box>
 
-										<Box>
-											<Typography
-												sx={{
-													fontSize: 20,
-													color: "#FFF",
-													fontWeight: 300,
-												}}
-											>
-												Planos exclusivos para os médicos do CREMESP.
-											</Typography>
-										</Box>
+										{channelSupportText && (
+											<Box>
+												<Typography
+													sx={{
+														fontSize: 20,
+														color: "#FFF",
+														fontWeight: 300,
+													}}
+												>
+													{channelSupportText}
+												</Typography>
+											</Box>
+										)}
 									</Box>
 
 									{indicator && (

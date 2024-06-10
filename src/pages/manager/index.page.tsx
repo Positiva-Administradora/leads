@@ -76,21 +76,25 @@ export const channels = [
 		id: 1,
 		slug: "wizmaisvoce",
 		name: "Wiz Mais Você",
+		supportText: "Canal de vendas exclusivo para clientes da Wiz",
 	},
 	{
 		id: 2,
 		slug: "positiva",
 		name: "Positiva",
+		supportText: "Canal de vendas exclusivo para clientes da Positiva",
 	},
 	{
 		id: 3,
 		slug: "meprotege",
 		name: "Me Protege",
+		supportText: "Canal de vendas exclusivo para clientes da Me Protege",
 	},
 	{
 		id: 4,
 		slug: "caixa",
 		name: "Caixa",
+		supportText: "Canal de vendas exclusivo para clientes da Caixa",
 	},
 ];
 
