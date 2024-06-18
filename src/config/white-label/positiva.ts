@@ -273,6 +273,13 @@ const positivaConfig = {
 	ansNumber: "42.028-0",
 	register: "28.929.873/0001-00",
 	terms: "https://positiva.com.br/politica-de-privacidade",
+
+	defaultContent: {
+		channelId: 2,
+		brokerId: 1,
+		backgroundId: 2,
+	},
+
 	logo: {
 		slug: "positiva-white",
 		alt: "Positiva",

@@ -1,9 +1,10 @@
 import { Control, Controller } from "react-hook-form";
 
+import { backgrounds, brokers, channels, indicators } from "@/data";
 import { Autocomplete, Box, Grid, TextField } from "@mui/material";
 import Image from "next/image";
 
-import { FormProps, brokers, channels, indicators } from "../index.page";
+import { FormProps } from "../index.page";
 
 export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 	return (
@@ -140,6 +141,74 @@ export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 											>
 												<Image
 													src={`/channels/${option.slug}.png`}
+													fill
+													style={{
+														objectFit: "contain",
+													}}
+													alt={option.name}
+												/>
+											</Box>
+										</Box>
+									</Box>
+								)}
+							/>
+						);
+					}}
+				/>
+			</Grid>
+
+			<Grid item xs={12}>
+				<Controller
+					control={control}
+					name="backgroundId"
+					render={({ field: { value, onChange, ...props }, fieldState: { error } }) => {
+						return (
+							<Autocomplete
+								{...props}
+								options={backgrounds}
+								value={backgrounds?.find(option => option.id === value) || null}
+								onChange={(_, data) => onChange(data?.id)}
+								getOptionLabel={option => option.name}
+								renderInput={params => (
+									<TextField
+										{...params}
+										label="Background"
+										variant="outlined"
+										helperText={error?.message}
+										error={!!error?.message}
+									/>
+								)}
+								renderOption={(props, option, _, ownerState) => (
+									<Box
+										{...props}
+										sx={{
+											padding: "5px",
+											display: "flex",
+											justifyContent: "space-between",
+											flex: 1,
+											gap: 2,
+										}}
+										component="li"
+									>
+										{ownerState.getOptionLabel(option)}
+
+										<Box
+											sx={{
+												ml: "auto",
+												p: 0.5,
+												backgroundColor: "secondary.main",
+												borderRadius: 2,
+											}}
+										>
+											<Box
+												sx={{
+													position: "relative",
+													width: 40,
+													aspectRatio: "1/1",
+												}}
+											>
+												<Image
+													src={`/backgrounds/${option.slug}.png`}
 													fill
 													style={{
 														objectFit: "contain",

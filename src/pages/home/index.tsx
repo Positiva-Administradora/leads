@@ -98,9 +98,9 @@ export default function Homepage({
 								},
 							}}
 						>
-							<BackgroundSection env={env} />
+							<BackgroundSection env={env} query={query} />
 
-							<InfoSection query={query} />
+							<InfoSection env={env} query={query} />
 						</Box>
 					</Box>
 
