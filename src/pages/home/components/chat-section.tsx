@@ -53,7 +53,7 @@ export const ChatSection = ({
 				}}
 				id="custom-chat-container"
 			>
-				<Chatwoot />
+				<Chatwoot env={env} />
 
 				<Skeleton
 					variant="rectangular"

@@ -116,3 +116,34 @@ export function getBackground({
 		alt,
 	};
 }
+
+export function getChatwootConfig({ env }: { env: EnvironmentProps["env"] }) {
+	type ConfigWrapper = {
+		[Key in EnvironmentProps["env"]]: {
+			BASE_URL: string;
+			WEBSITE_TOKEN: string;
+		};
+	};
+
+	const configWrapper: ConfigWrapper = {
+		wiz: {
+			BASE_URL: process.env.NEXT_PUBLIC_CHATWOOT_BASE_URL_WIZ!,
+			WEBSITE_TOKEN: process.env.NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_WIZ!,
+		},
+		positiva: {
+			BASE_URL: process.env.NEXT_PUBLIC_CHATWOOT_BASE_URL_POSITIVA!,
+			WEBSITE_TOKEN: process.env.NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_POSITIVA!,
+		},
+		meprotege: {
+			BASE_URL: process.env.NEXT_PUBLIC_CHATWOOT_BASE_URL_WIZ!,
+			WEBSITE_TOKEN: process.env.NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_WIZ!,
+		},
+	};
+
+	const { BASE_URL, WEBSITE_TOKEN } = configWrapper[env];
+
+	return {
+		BASE_URL,
+		WEBSITE_TOKEN,
+	};
+}
