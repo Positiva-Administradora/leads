@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 
+import { EnvironmentProps } from "@/types/environment";
+import { getChatwootConfig } from "@/utils/getDynamicContent";
+
 declare global {
 	interface Window {
 		chatwootSettings: {
-			hideMessageBubble: boolean;
-			position: string;
-			locale: string;
-			type: string;
+			hideMessageBubble?: boolean;
+			position?: string;
+			locale?: string;
+			type?: string;
 			darkMode?: string;
 		};
 		$chatwoot: {
@@ -18,17 +21,16 @@ declare global {
 	}
 }
 
-export const Chatwoot = () => {
+export const Chatwoot = ({ env }: { env: EnvironmentProps["env"] }) => {
 	useEffect(() => {
+		const { BASE_URL, WEBSITE_TOKEN } = getChatwootConfig({ env });
+
 		window.chatwootSettings = {
 			hideMessageBubble: true,
-			position: "right",
 			locale: "pt",
-			type: "standard",
 		};
 
 		(function (d, t) {
-			const BASE_URL = process.env.NEXT_PUBLIC_CHATWOOT_BASE_URL_WIZ!;
 			const g = d.createElement(t) as HTMLScriptElement,
 				s = d.getElementsByTagName(t)[0] as HTMLScriptElement;
 			g.src = BASE_URL + "/packs/js/sdk.js";
@@ -37,7 +39,7 @@ export const Chatwoot = () => {
 			s.parentNode?.insertBefore(g, s);
 			g.onload = function () {
 				window.chatwootSDK.run({
-					websiteToken: process.env.NEXT_PUBLIC_CHATWOOT_WEBSITE_TOKEN_WIZ!,
+					websiteToken: WEBSITE_TOKEN,
 					baseUrl: BASE_URL,
 				});
 

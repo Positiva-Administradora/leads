@@ -272,16 +272,25 @@ const meProtegeConfig = {
 	description: "Me Protege Franquia e Corretora de Seguros LTDA",
 	register: "25.006.061/0001-97",
 	terms: "https://meprotege.com.br/",
+
+	defaultContent: {
+		channelId: 3,
+		brokerId: 1,
+		backgroundId: 3,
+	},
+
 	logo: {
 		slug: "meprotege-white",
 		alt: "Me Protege",
 		format: "png",
 	},
+
 	background: {
 		slug: "meprotege",
 		alt: "Me Protege",
 		format: "png",
 	},
+
 	social: [
 		{
 			format: "svg",

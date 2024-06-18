@@ -3,4 +3,5 @@ export interface QueryProps {
 	brokerId: number;
 	channelId: number | null;
 	indicatorId: number | null;
+	backgroundId: number | null;
 }

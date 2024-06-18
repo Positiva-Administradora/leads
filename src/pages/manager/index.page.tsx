@@ -13,87 +13,12 @@ import { GetServerSidePropsContext } from "next";
 
 import { Form } from "./components/form";
 
-export const indicators = [
-	{
-		id: 1,
-		name: "Paulo Sampaio",
-		position: "Ger. Comercial",
-		socialLinks: [
-			{
-				id: 1,
-				slug: "whatsapp",
-				name: "WhatsApp",
-				url: "https://wa.me/21968892704",
-			},
-			{
-				id: 2,
-				slug: "email",
-				name: "E-mail",
-				url: "mailto:paulo@gmail.com",
-			},
-		],
-	},
-	{
-		id: 2,
-		name: "João Silva",
-		position: "Ger. Caixa",
-		socialLinks: [
-			{
-				id: 1,
-				slug: "whatsapp",
-				name: "WhatsApp",
-				url: "https://wa.me/21968892704",
-			},
-			{
-				id: 2,
-				slug: "email",
-				name: "E-mail",
-				url: "mailto:",
-			},
-		],
-	},
-];
-
-export const brokers = [
-	{
-		id: 1,
-		slug: "wizmaisvoce",
-		name: "Wiz Mais Você",
-	},
-];
-
-export const channels = [
-	{
-		id: 1,
-		slug: "wizmaisvoce",
-		name: "Wiz Mais Você",
-		supportText: "Canal de vendas exclusivo para clientes da Wiz",
-	},
-	{
-		id: 2,
-		slug: "positiva",
-		name: "Positiva",
-		supportText: "Canal de vendas exclusivo para clientes da Positiva",
-	},
-	{
-		id: 3,
-		slug: "meprotege",
-		name: "Me Protege",
-		supportText: "Canal de vendas exclusivo para clientes da Me Protege",
-	},
-	{
-		id: 4,
-		slug: "caixa",
-		name: "Caixa",
-		supportText: "Canal de vendas exclusivo para clientes da Caixa",
-	},
-];
-
 export interface FormProps {
 	userFullName: string;
 	brokerId: number | null;
 	channelId: number | null;
 	indicatorId: number | null;
+	backgroundId: number | null;
 }
 
 export default function Manager() {
@@ -105,6 +30,7 @@ export default function Manager() {
 			brokerId: null,
 			channelId: null,
 			indicatorId: null,
+			backgroundId: null,
 		},
 	});
 
@@ -185,6 +111,7 @@ export default function Manager() {
 										brokerId: null,
 										channelId: null,
 										indicatorId: null,
+										backgroundId: null,
 									});
 								}}
 							>
