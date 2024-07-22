@@ -14,7 +14,7 @@ export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 					control={control}
 					name="userFullName"
 					render={({ field }) => (
-						<TextField label="Nome Completo do Cliente" required fullWidth {...field} />
+						<TextField label="Nome do Usuário" required fullWidth {...field} />
 					)}
 				/>
 			</Grid>

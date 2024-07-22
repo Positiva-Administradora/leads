@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { Wrapper } from "@/components/wrapper";
-import { encrypt } from "@/utils/crypto";
+import { base64, encrypt } from "@/utils/crypto";
 import { getDefaultServerSideProps } from "@/utils/get-default-server-side-props";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import LinkIcon from "@mui/icons-material/Link";
@@ -34,12 +34,12 @@ export default function Manager() {
 		},
 	});
 
-	async function submit(data: FormProps) {
+	async function submit({ userFullName, ...data }: FormProps) {
 		const encrypted = encrypt(JSON.stringify(data));
+		const usernameBase64 = base64(userFullName);
 
 		const origin = window.location.origin;
-		const query = `?k=${encrypted}`;
-
+		const query = `?k=${encrypted}&u=${usernameBase64}`;
 		const link = `${origin}${query}`;
 
 		setEncryptedLink(link);

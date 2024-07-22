@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 
 import { EnvironmentProps } from "@/types/environment";
+import { hmac } from "@/utils/crypto";
 import { getChatwootConfig } from "@/utils/getDynamicContent";
+import { v4 as uuid } from "uuid";
 
 declare global {
 	interface Window {
@@ -14,6 +16,7 @@ declare global {
 		};
 		$chatwoot: {
 			toggle: (action: string) => void;
+			setUser: (identifier: string, user: { name: string; identifier_hash: string }) => void;
 		};
 		chatwootSDK: {
 			run: (config: { websiteToken: string; baseUrl: string }) => void;
@@ -22,9 +25,27 @@ declare global {
 }
 
 export const Chatwoot = ({ env }: { env: EnvironmentProps["env"] }) => {
-	useEffect(() => {
-		const { BASE_URL, WEBSITE_TOKEN } = getChatwootConfig({ env });
+	const { BASE_URL, WEBSITE_TOKEN } = getChatwootConfig({ env });
 
+	function getOrCreateUserId() {
+		let userId = localStorage.getItem("userId");
+		if (!userId) {
+			userId = uuid();
+			localStorage.setItem("userId", userId!);
+		}
+		return userId;
+	}
+
+	// Example user information function
+	function getUserInfo() {
+		const userId = getOrCreateUserId();
+		return {
+			identifier: userId,
+			name: "Guest User",
+		};
+	}
+
+	useEffect(() => {
 		window.chatwootSettings = {
 			hideMessageBubble: true,
 			locale: "pt",
@@ -62,6 +83,13 @@ export const Chatwoot = ({ env }: { env: EnvironmentProps["env"] }) => {
 	useEffect(() => {
 		function handleChatwootReady() {
 			window.$chatwoot.toggle("open");
+			const { identifier, name } = getUserInfo();
+			const identifier_hash = hmac(identifier, WEBSITE_TOKEN);
+
+			window.$chatwoot.setUser(identifier, {
+				name,
+				identifier_hash,
+			});
 		}
 
 		function handleChatwootMessage(e: any) {
