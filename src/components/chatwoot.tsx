@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 
 import { EnvironmentProps } from "@/types/environment";
+import { QueryProps } from "@/types/query";
+import { hmac } from "@/utils/crypto";
 import { getChatwootConfig } from "@/utils/getDynamicContent";
+import { v4 as uuid } from "uuid";
 
 declare global {
 	interface Window {
@@ -14,6 +17,7 @@ declare global {
 		};
 		$chatwoot: {
 			toggle: (action: string) => void;
+			setUser: (identifier: string, user: { name: string; identifier_hash: string }) => void;
 		};
 		chatwootSDK: {
 			run: (config: { websiteToken: string; baseUrl: string }) => void;
@@ -21,10 +25,27 @@ declare global {
 	}
 }
 
-export const Chatwoot = ({ env }: { env: EnvironmentProps["env"] }) => {
-	useEffect(() => {
-		const { BASE_URL, WEBSITE_TOKEN } = getChatwootConfig({ env });
+export const Chatwoot = ({ env, query }: { env: EnvironmentProps["env"]; query: QueryProps }) => {
+	const { BASE_URL, WEBSITE_TOKEN, USER_IDENTITY } = getChatwootConfig({ env });
 
+	function getOrCreateUserId() {
+		let userId = localStorage.getItem("userId");
+		if (!userId) {
+			userId = uuid();
+			localStorage.setItem("userId", userId!);
+		}
+		return userId;
+	}
+
+	function getUserInfo() {
+		const userId = getOrCreateUserId();
+		return {
+			identifier: userId,
+			name: query?.clientFullName || "Sem identificação",
+		};
+	}
+
+	useEffect(() => {
 		window.chatwootSettings = {
 			hideMessageBubble: true,
 			locale: "pt",
@@ -62,6 +83,13 @@ export const Chatwoot = ({ env }: { env: EnvironmentProps["env"] }) => {
 	useEffect(() => {
 		function handleChatwootReady() {
 			window.$chatwoot.toggle("open");
+			const { identifier, name } = getUserInfo();
+			const identifier_hash = hmac(identifier, USER_IDENTITY);
+
+			window.$chatwoot.setUser(identifier, {
+				name,
+				identifier_hash,
+			});
 		}
 
 		function handleChatwootMessage(e: any) {
