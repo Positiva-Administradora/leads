@@ -22,6 +22,16 @@ export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 			<Grid item xs={12}>
 				<Controller
 					control={control}
+					name="clientFullName"
+					render={({ field }) => (
+						<TextField label="Nome do Cliente" required fullWidth {...field} />
+					)}
+				/>
+			</Grid>
+
+			<Grid item xs={12}>
+				<Controller
+					control={control}
 					name="brokerId"
 					rules={{ required: "Campo obrigatório" }}
 					render={({ field: { value, onChange, ...props }, fieldState: { error } }) => {

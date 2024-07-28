@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { EnvironmentProps } from "@/types/environment";
+import { QueryProps } from "@/types/query";
 import { hmac } from "@/utils/crypto";
 import { getChatwootConfig } from "@/utils/getDynamicContent";
 import { v4 as uuid } from "uuid";
@@ -24,8 +25,8 @@ declare global {
 	}
 }
 
-export const Chatwoot = ({ env }: { env: EnvironmentProps["env"] }) => {
-	const { BASE_URL, WEBSITE_TOKEN } = getChatwootConfig({ env });
+export const Chatwoot = ({ env, query }: { env: EnvironmentProps["env"]; query: QueryProps }) => {
+	const { BASE_URL, WEBSITE_TOKEN, USER_IDENTITY } = getChatwootConfig({ env });
 
 	function getOrCreateUserId() {
 		let userId = localStorage.getItem("userId");
@@ -36,12 +37,11 @@ export const Chatwoot = ({ env }: { env: EnvironmentProps["env"] }) => {
 		return userId;
 	}
 
-	// Example user information function
 	function getUserInfo() {
 		const userId = getOrCreateUserId();
 		return {
 			identifier: userId,
-			name: "Guest User",
+			name: query?.clientFullName || "Sem identificação",
 		};
 	}
 
@@ -84,7 +84,7 @@ export const Chatwoot = ({ env }: { env: EnvironmentProps["env"] }) => {
 		function handleChatwootReady() {
 			window.$chatwoot.toggle("open");
 			const { identifier, name } = getUserInfo();
-			const identifier_hash = hmac(identifier, WEBSITE_TOKEN);
+			const identifier_hash = hmac(identifier, USER_IDENTITY);
 
 			window.$chatwoot.setUser(identifier, {
 				name,

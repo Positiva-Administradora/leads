@@ -15,6 +15,7 @@ import { Form } from "./components/form";
 
 export interface FormProps {
 	userFullName: string;
+	clientFullName: string;
 	brokerId: number | null;
 	channelId: number | null;
 	indicatorId: number | null;
@@ -27,6 +28,7 @@ export default function Manager() {
 	const { control, handleSubmit, reset, formState } = useForm<FormProps>({
 		defaultValues: {
 			userFullName: "",
+			clientFullName: "",
 			brokerId: null,
 			channelId: null,
 			indicatorId: null,
