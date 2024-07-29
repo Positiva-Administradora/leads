@@ -9,7 +9,7 @@ import { FormProps } from "../index.page";
 export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 	return (
 		<Grid container spacing={2}>
-			<Grid item xs={12}>
+			<Grid item xs={6}>
 				<Controller
 					control={control}
 					name="userFullName"
@@ -19,7 +19,7 @@ export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 				/>
 			</Grid>
 
-			<Grid item xs={12}>
+			<Grid item xs={6}>
 				<Controller
 					control={control}
 					name="clientFullName"
@@ -29,7 +29,7 @@ export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 				/>
 			</Grid>
 
-			<Grid item xs={12}>
+			<Grid item xs={4}>
 				<Controller
 					control={control}
 					name="brokerId"
@@ -99,7 +99,7 @@ export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 				/>
 			</Grid>
 
-			<Grid item xs={12}>
+			<Grid item xs={4}>
 				<Controller
 					control={control}
 					name="channelId"
@@ -167,7 +167,7 @@ export const Form = ({ control }: { control: Control<FormProps, any> }) => {
 				/>
 			</Grid>
 
-			<Grid item xs={12}>
+			<Grid item xs={4}>
 				<Controller
 					control={control}
 					name="backgroundId"
