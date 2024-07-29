@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import CryptoJS from "crypto-js";
 
 const secretKey = "1234567890123456";
@@ -7,7 +8,6 @@ export const encrypt = (text: string) => {
 	return encodeURIComponent(ciphertext);
 };
 
-// Função para descriptografar
 export const decrypt = (ciphertext: string) => {
 	const decodedCiphertext = decodeURIComponent(ciphertext);
 
@@ -17,10 +17,11 @@ export const decrypt = (ciphertext: string) => {
 	return originalText;
 };
 
-export function test(string: string) {
-	const encrypted = encrypt(string);
-	console.log("Encrypted:", encrypted);
-
-	const decrypted = decrypt(encrypted);
-	console.log("Decrypted:", JSON.parse(decrypted));
+export function base64(text: string) {
+	return btoa(text);
 }
+
+export const hmac = (identifier: string, secretKey: string) => {
+	const hash = crypto.createHmac("sha256", secretKey).update(identifier).digest("hex");
+	return hash;
+};

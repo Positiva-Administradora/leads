@@ -106,7 +106,10 @@ export const Footer = ({ env }: EnvironmentProps) => {
 									xs: "wrap",
 								},
 
-								mx: "auto",
+								justifyContent: {
+									md: "flex-start",
+									xs: "center",
+								},
 							}}
 							onClick={() => window.open(terms, "_blank")}
 						>

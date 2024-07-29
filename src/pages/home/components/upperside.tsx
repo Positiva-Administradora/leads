@@ -1,6 +1,6 @@
-import { brokers, channels } from "@/pages/manager/index.page";
 import { EnvironmentProps } from "@/types/environment";
 import { QueryProps } from "@/types/query";
+import { getBrooker, getChannel } from "@/utils/getDynamicContent";
 import { Box, SxProps, Typography } from "@mui/material";
 import Image from "next/image";
 
@@ -13,13 +13,8 @@ export const UpperSide = ({
 	sx?: SxProps;
 	query: QueryProps;
 }) => {
-	const imageByEnv = env === "wiz" ? "wizmaisvoce" : env;
-
-	const channelId = query?.channelId;
-	const channelPath = channelId ? channels.find(c => c.id === channelId)?.slug : imageByEnv;
-
-	const brokerId = query?.brokerId;
-	const brokerPath = brokerId ? brokers.find(c => c.id === brokerId)?.slug : "wizmaisvoce";
+	const channel = getChannel({ env, channelId: query?.channelId });
+	const broker = getBrooker({ env, brokerId: query?.brokerId });
 
 	return (
 		<Box
@@ -41,20 +36,18 @@ export const UpperSide = ({
 					position: "relative",
 				}}
 			>
-				{channelPath && (
-					<Image
-						src={`/channels/${channelPath}.png`}
-						alt="Logo"
-						fill
-						priority
-						quality={100}
-						draggable={false}
-						style={{
-							objectFit: "contain",
-							objectPosition: "left",
-						}}
-					/>
-				)}
+				<Image
+					src={channel.src}
+					alt={channel.alt}
+					fill
+					priority
+					quality={100}
+					draggable={false}
+					style={{
+						objectFit: "contain",
+						objectPosition: "left",
+					}}
+				/>
 			</Box>
 
 			<Box
@@ -85,18 +78,16 @@ export const UpperSide = ({
 						position: "relative",
 					}}
 				>
-					{brokerPath && (
-						<Image
-							src={`/brokers/${brokerPath}.png`}
-							alt="Logo"
-							fill
-							draggable={false}
-							style={{
-								objectFit: "contain",
-								objectPosition: "right",
-							}}
-						/>
-					)}
+					<Image
+						src={broker.src}
+						alt={broker.alt}
+						fill
+						draggable={false}
+						style={{
+							objectFit: "contain",
+							objectPosition: "right",
+						}}
+					/>
 				</Box>
 			</Box>
 		</Box>

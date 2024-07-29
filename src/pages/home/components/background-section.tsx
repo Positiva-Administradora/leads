@@ -1,15 +1,19 @@
 import { Fragment } from "react";
 
-import { getWhiteLabel } from "@/config";
 import { EnvironmentProps } from "@/types/environment";
+import { QueryProps } from "@/types/query";
+import { getBackground } from "@/utils/getDynamicContent";
 import { Box } from "@mui/material";
 import Image from "next/image";
 
-export const BackgroundSection = ({ env }: { env: EnvironmentProps["env"] }) => {
-	const { background } = getWhiteLabel(env);
-
-	const backgroundAlt = background?.alt;
-	const backgroundPath = `/backgrounds/${background?.slug}.${background?.format}`;
+export const BackgroundSection = ({
+	env,
+	query,
+}: {
+	env: EnvironmentProps["env"];
+	query: QueryProps;
+}) => {
+	const background = getBackground({ env, backgroundId: query?.backgroundId });
 
 	return (
 		<Fragment>
@@ -44,9 +48,9 @@ export const BackgroundSection = ({ env }: { env: EnvironmentProps["env"] }) => 
 				}}
 			>
 				<Image
-					src={backgroundPath}
+					src={background.src}
+					alt={background.alt}
 					sizes="(min-width: 1024px) 800px, 100vw"
-					alt={backgroundAlt}
 					fill
 					style={{
 						objectFit: "contain",

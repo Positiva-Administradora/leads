@@ -1,15 +1,18 @@
-import { channels, indicators } from "@/pages/manager/index.page";
+import { EnvironmentProps } from "@/types/environment";
 import { QueryProps } from "@/types/query";
+import { getChannel, getIndicator } from "@/utils/getDynamicContent";
 import { Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 
-export const InfoSection = ({ query }: { query: QueryProps }) => {
-	const indicatorId = query?.indicatorId;
-	const indicator = indicatorId ? indicators.find(c => c.id === indicatorId) : null;
-	const indicatorPath = `/indicators/${indicator?.id}.png`;
-
-	const channelId = query?.channelId;
-	const channelSupportText = channelId ? channels.find(c => c.id === channelId)?.supportText : null;
+export const InfoSection = ({
+	env,
+	query,
+}: {
+	env: EnvironmentProps["env"];
+	query: QueryProps;
+}) => {
+	const indicator = getIndicator({ indicatorId: query?.indicatorId });
+	const channel = getChannel({ env, channelId: query?.channelId });
 
 	return (
 		<Box
@@ -63,19 +66,17 @@ export const InfoSection = ({ query }: { query: QueryProps }) => {
 						</Typography>
 					</Box>
 
-					{channelSupportText && (
-						<Box>
-							<Typography
-								sx={{
-									fontSize: 20,
-									color: "#FFF",
-									fontWeight: 300,
-								}}
-							>
-								{channelSupportText}
-							</Typography>
-						</Box>
-					)}
+					<Box>
+						<Typography
+							sx={{
+								fontSize: 20,
+								color: "#FFF",
+								fontWeight: 300,
+							}}
+						>
+							{channel.supportText}
+						</Typography>
+					</Box>
 				</Box>
 
 				{indicator && (
@@ -107,7 +108,7 @@ export const InfoSection = ({ query }: { query: QueryProps }) => {
 							}}
 						>
 							<Image
-								src={indicatorPath}
+								src={indicator.src}
 								alt="Logo"
 								fill
 								style={{

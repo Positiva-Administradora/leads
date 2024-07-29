@@ -286,6 +286,13 @@ const wizConfig = {
 	description: "Wiz Benefícios Varejo Soluções e Corretagem de Seguros S.A",
 	register: "46.597.249/0001-27",
 	terms: "https://wizmaisvoce.com.br/politica-de-privacidade",
+
+	defaultContent: {
+		channelId: 1,
+		brokerId: 1,
+		backgroundId: 1,
+	},
+
 	logo: {
 		slug: "wiz-white",
 		alt: "Wiz Mais Você",
